@@ -1,8 +1,7 @@
 import { Component, Fragment } from 'react';
-// import imgApi from './api/img-api';
-import 'modern-normalize/modern-normalize.css';
 import Searchbar from './components/Searchbar';
 import SearchInfo from './components/SearchInfo';
+import 'modern-normalize/modern-normalize.css';
 
 class App extends Component {
   state = {
