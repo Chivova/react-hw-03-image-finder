@@ -13,27 +13,29 @@ class SearchInfo extends Component {
     const nextQuery = this.props.imageQuery;
 
     if (prevQuery !== nextQuery) {
-      this.setState({ loading: true });
+      this.setState({ loading: true, gallery: [] });
 
       imgApi
         .fetchImgApi(nextQuery)
-        .then(gallery => this.setState({ gallery }))
-        .catch(function (error) {
-          if (error.response) {
-            this.setState({ error: error.status });
+        .then(gallery => {
+          if (gallery.length === 0) {
+            // return Promise.reject(error.response);
+            this.setState({
+              error: `No images found on your request ${nextQuery}`,
+            });
           }
+          this.setState({ gallery });
         })
         .finally(() => this.setState({ loading: false }));
     }
-    console.log(this.state.error);
   }
 
   render() {
-    const { gallery, loading } = this.state;
+    const { gallery, error, loading } = this.state;
 
     return (
       <div>
-        {this.state.error && <p>askljsalkdjaslkdj</p>}
+        {error && <h2>{error}</h2>}
         {loading && <p>Load......</p>}
         <ImageGallery gallery={gallery} />
       </div>

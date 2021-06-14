@@ -1,4 +1,6 @@
 import { Component } from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class Searchbar extends Component {
   state = {
@@ -15,6 +17,15 @@ class Searchbar extends Component {
     e.preventDefault();
 
     const imageQuery = this.state.query;
+
+    if (imageQuery.trim() === '') {
+      toast.warn('🦄 Сheck if the input is correct!', {
+        position: 'top-right',
+        autoClose: 3000,
+      });
+
+      return;
+    }
 
     this.props.onSubmit(imageQuery);
     this.setState({ query: '' });

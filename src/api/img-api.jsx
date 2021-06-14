@@ -8,7 +8,10 @@ const fetchImgApi = query => {
     .get(
       `${BASE_URL}/?q=${query}&page=1&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`,
     )
-    .then(r => r.data.hits);
+    .then(r => r.data.hits)
+    .catch(function (error) {
+      console.log(JSON.stringify(error));
+    });
 };
 
 const imgApi = {
