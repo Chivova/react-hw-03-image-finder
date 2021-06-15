@@ -12,33 +12,37 @@ class SearchInfo extends Component {
     loading: false,
     error: null,
   };
+
   componentDidUpdate(prevProps, prevState) {
-    const { page } = this.state;
     const prevQuery = prevProps.imageQuery;
     const nextQuery = this.props.imageQuery;
-    console.log(prevState);
 
     if (prevQuery !== nextQuery) {
       this.setState({ loading: true, gallery: [] });
-
-      imgApi
-        .fetchImgApi(nextQuery, page)
-        .then(gallery => {
-          if (gallery.length === 0) {
-            // return Promise.reject(error.response);
-            this.setState({
-              error: `No images found on your request ${nextQuery}`,
-            });
-          }
-          this.setState(prevState => ({
-            gallery: [...prevState.gallery, ...gallery],
-            page: page + 1,
-          }));
-        })
-        .finally(() => this.setState({ loading: false }));
+      this.fetchImgApi(nextQuery);
     }
   }
 
+  fetchImgApi = nextQuery => {
+    console.log(nextQuery);
+    const { page } = this.state;
+
+    imgApi
+      .fetchImgApi(nextQuery, page)
+      .then(gallery => {
+        if (gallery.length === 0) {
+          // return Promise.reject(error.response);
+          this.setState({
+            error: `No images found on your request ${nextQuery}`,
+          });
+        }
+        this.setState(prevState => ({
+          gallery: [...prevState.gallery, ...gallery],
+          page: page + 1,
+        }));
+      })
+      .finally(() => this.setState({ loading: false }));
+  };
   render() {
     const { gallery, error, loading } = this.state;
 
@@ -49,7 +53,7 @@ class SearchInfo extends Component {
           <Loader type="Puff" color="#00BFFF" height={50} width={50} />
         )}
         <ImageGallery gallery={gallery} />
-        <Button />
+        <Button onClick={this.fetchImgApi} />
       </div>
     );
   }

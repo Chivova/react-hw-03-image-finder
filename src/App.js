@@ -7,20 +7,21 @@ import 'modern-normalize/modern-normalize.css';
 class App extends Component {
   state = {
     imageQuery: '',
+    page: 1,
   };
 
   handleFormSubmit = imageQuery => {
-    this.setState({ imageQuery });
+    this.setState({ imageQuery, page: 1 });
   };
 
   render() {
-    const { imageQuery } = this.state;
+    const { imageQuery, page } = this.state;
 
     return (
       <Fragment>
         <ToastContainer />
         <Searchbar onSubmit={this.handleFormSubmit} />
-        <SearchInfo imageQuery={imageQuery} />
+        <SearchInfo imageQuery={imageQuery} page={page} />
       </Fragment>
     );
   }
