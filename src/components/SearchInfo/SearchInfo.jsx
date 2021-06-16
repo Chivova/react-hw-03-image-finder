@@ -8,7 +8,7 @@ import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 class SearchInfo extends Component {
   state = {
     gallery: [],
-    page: 1,
+    // page: 1,
     loading: false,
     error: null,
   };
@@ -18,13 +18,14 @@ class SearchInfo extends Component {
     const nextQuery = this.props.imageQuery;
 
     if (prevQuery !== nextQuery) {
-      this.setState({ loading: true, gallery: [], page: 1 });
+      this.setState({ loading: true, gallery: [] });
       this.fetchImgApi();
     }
   }
 
   fetchImgApi = () => {
-    const { page } = this.state;
+    // const { page } = this.state;
+    const page = this.props.page;
     const nextQuery = this.props.imageQuery;
 
     imgApi

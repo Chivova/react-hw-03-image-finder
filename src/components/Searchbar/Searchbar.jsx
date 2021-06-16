@@ -32,7 +32,7 @@ class Searchbar extends Component {
   };
 
   render() {
-    const { value } = this.state;
+    const { query } = this.state;
 
     return (
       <header className="Searchbar">
@@ -48,7 +48,7 @@ class Searchbar extends Component {
             autoComplete="off"
             autoFocus
             placeholder="Search images and photos"
-            value={value}
+            value={query}
           />
         </form>
       </header>

@@ -11,7 +11,7 @@ class App extends Component {
   };
 
   handleFormSubmit = imageQuery => {
-    this.setState({ imageQuery, page: 1 });
+    this.setState({ imageQuery });
   };
 
   render() {
