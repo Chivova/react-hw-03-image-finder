@@ -18,14 +18,14 @@ class SearchInfo extends Component {
     const nextQuery = this.props.imageQuery;
 
     if (prevQuery !== nextQuery) {
-      this.setState({ loading: true, gallery: [] });
-      this.fetchImgApi(nextQuery);
+      this.setState({ loading: true, gallery: [], page: 1 });
+      this.fetchImgApi();
     }
   }
 
-  fetchImgApi = nextQuery => {
-    console.log(nextQuery);
+  fetchImgApi = () => {
     const { page } = this.state;
+    const nextQuery = this.props.imageQuery;
 
     imgApi
       .fetchImgApi(nextQuery, page)
