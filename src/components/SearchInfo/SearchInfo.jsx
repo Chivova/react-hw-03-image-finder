@@ -24,7 +24,7 @@ class SearchInfo extends Component {
     if (prevQuery !== nextQuery) {
       this.setState({ loading: true, gallery: [], page: 1, error: null });
       imgApi
-        .fetchImgApi(nextQuery, page)
+        .fetchImgApi(nextQuery)
         .then(gallery => {
           if (gallery.length === 0) {
             this.setState({
@@ -82,7 +82,7 @@ class SearchInfo extends Component {
         {loading && (
           <Loader type="Puff" color="#00BFFF" height={50} width={50} />
         )}
-        <Button onClick={this.updatePage} />
+        {gallery.length > 1 && <Button onClick={this.fetchImgApi} />}
       </div>
     );
   }

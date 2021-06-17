@@ -1,7 +1,9 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
+
 import 'react-toastify/dist/ReactToastify.css';
+import s from './Searchbar.module.css';
 
 class Searchbar extends Component {
   state = {
@@ -36,15 +38,15 @@ class Searchbar extends Component {
     const { query } = this.state;
 
     return (
-      <header className="Searchbar">
-        <form onSubmit={this.handleSubmit} className="SearchForm">
-          <button type="submit" className="SearchForm-button">
-            <span className="SearchForm-button-label">Search</span>
+      <header className={s.searchbar}>
+        <form onSubmit={this.handleSubmit} className={s.searchForm}>
+          <button type="submit" className={s.searchFormButton}>
+            <span className={s.searchFormButtonLabel}>Search</span>
           </button>
 
           <input
             onChange={this.handleSearchQuery}
-            className="SearchForm-input"
+            className={s.searchFormInput}
             type="text"
             autoComplete="off"
             autoFocus

@@ -4,6 +4,7 @@ import Searchbar from './components/Searchbar';
 import SearchInfo from './components/SearchInfo';
 
 import 'modern-normalize/modern-normalize.css';
+import './App.css';
 
 class App extends Component {
   state = {

@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
+import s from './ImageGalleryItem.module.css';
 
 import Modal from '../Modal';
 
@@ -18,12 +19,12 @@ class ImageGalleryItem extends Component {
     const { webformatURL, largeImageURL } = this.props;
 
     return (
-      <li className="ImageGalleryItem">
+      <li className={s.imageGalleryItem}>
         <img
           onClick={this.toggleModal}
           src={webformatURL}
           alt=""
-          className="ImageGalleryItem-image"
+          className={s.imageGalleryItemImage}
         />
         {this.state.showModal && (
           <Modal largeImageURL={largeImageURL} onClose={this.toggleModal} />
