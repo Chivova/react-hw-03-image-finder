@@ -1,8 +1,11 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
+import Loader from 'react-loader-spinner';
+
 import imgApi from '../../api/img-api';
 import ImageGallery from '../ImageGallery';
 import Button from '../Button';
-import Loader from 'react-loader-spinner';
+
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
 class SearchInfo extends Component {
@@ -21,10 +24,9 @@ class SearchInfo extends Component {
     if (prevQuery !== nextQuery) {
       this.setState({ loading: true, gallery: [], page: 1, error: null });
       imgApi
-        .fetchImgApi(nextQuery)
+        .fetchImgApi(nextQuery, page)
         .then(gallery => {
           if (gallery.length === 0) {
-            // return Promise.reject(error.response);
             this.setState({
               error: `No images found on your request ${nextQuery}`,
             });
@@ -37,6 +39,12 @@ class SearchInfo extends Component {
         .finally(() => this.setState({ loading: false }));
     }
   }
+
+  // updatePage = () => {
+  //   this.setState(({ page }) => ({
+  //     page: page + 1,
+  //   }));
+  // };
 
   fetchImgApi = () => {
     const { page } = this.state;
@@ -74,9 +82,12 @@ class SearchInfo extends Component {
         {loading && (
           <Loader type="Puff" color="#00BFFF" height={50} width={50} />
         )}
-        <Button onClick={this.fetchImgApi} />
+        <Button onClick={this.updatePage} />
       </div>
     );
   }
 }
+SearchInfo.propTypes = {
+  imageQuery: PropTypes.string.isRequired,
+};
 export default SearchInfo;
