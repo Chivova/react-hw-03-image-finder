@@ -17,12 +17,14 @@ class SearchInfo extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    const { page } = this.state;
     const prevQuery = prevProps.imageQuery;
     const nextQuery = this.props.imageQuery;
+    const prevPage = prevState.page;
+    const nextPage = this.state.page;
 
     if (prevQuery !== nextQuery) {
-      this.setState({ loading: true, gallery: [], page: 1, error: null });
+      this.setState({ gallery: [], page: 1, loading: true, error: null });
+
       imgApi
         .fetchImgApi(nextQuery)
         .then(gallery => {
@@ -33,36 +35,31 @@ class SearchInfo extends Component {
           }
           this.setState({
             gallery,
-            page: page + 1,
           });
         })
         .finally(() => this.setState({ loading: false }));
     }
+
+    if (prevPage < nextPage) {
+      this.setState({ loading: true });
+      imgApi
+        .fetchImgApi(nextQuery, nextPage)
+        .then(gallery => {
+          this.setState(prevState => ({
+            gallery: [...prevState.gallery, ...gallery],
+          }));
+        })
+        .finally(() => {
+          this.scroll();
+          this.setState({ loading: false });
+        });
+    }
   }
 
-  // updatePage = () => {
-  //   this.setState(({ page }) => ({
-  //     page: page + 1,
-  //   }));
-  // };
-
-  fetchImgApi = () => {
-    const { page } = this.state;
-    const nextQuery = this.props.imageQuery;
-
-    imgApi
-      .fetchImgApi(nextQuery, page)
-      .then(gallery => {
-        this.setState(prevState => ({
-          gallery: [...prevState.gallery, ...gallery],
-          page: page + 1,
-          loading: true,
-        }));
-      })
-      .finally(() => {
-        this.scroll();
-        this.setState({ loading: false });
-      });
+  updatePage = () => {
+    this.setState(({ page }) => ({
+      page: page + 1,
+    }));
   };
 
   scroll = () => {
@@ -82,7 +79,7 @@ class SearchInfo extends Component {
         {loading && (
           <Loader type="Puff" color="#00BFFF" height={50} width={50} />
         )}
-        {gallery.length > 1 && <Button onClick={this.fetchImgApi} />}
+        {gallery.length > 1 && <Button onClick={this.updatePage} />}
       </div>
     );
   }
